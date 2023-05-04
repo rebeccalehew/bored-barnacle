@@ -1,0 +1,29 @@
+/* Stylesheet for generated team HTML page */
+
+* {
+    box-sizing: border-box;
+    background-color: --bs-primary-bg-subtle;
+}
+
+body {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.navbar-brand {
+    font-size: 60px;
+}
+
+.card-header {
+    padding: 20px;
+    box-shadow: 10px 10px 5px rgb(153, 150, 150);
+}
+
+.card-body {
+    font-size: 16px;
+    padding: 20px;
+    box-shadow: 10px 10px 5px rgb(153, 150, 150);
+}
+
+.container {
+    margin: 40px auto;
+}

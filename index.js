@@ -7,138 +7,147 @@ const path = require('path');
 const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
 const Manager = require('./lib/Manager');
-const generateTeam = require('./src/generateHTML');
+const generateHTML = require('./src/generateHTML');
 
-// Creates an array of answers based on user input; this array object will be used to create the index.html file
+// creates an array where team member profiles are pushed
 const team = [];
 
-// Array object questions asked in CLI; answers collected from user input 
-const questions = async () => {
-    const answers = await inquirer
-    .prompt([
-        {
-            type: 'input',
-            message: 'What is your name?',
-            name: 'name',
-        },
-        {
-            type: 'input',
-            message: 'What is your ID number?',
-            name: 'id',
-        },
-        {
-            type: 'input',
-            message: 'What is your email?',
-            name: 'email',
-        },
-        {
-            type: 'list',
-            message: 'What is your role on the team?',
-            name: 'role',
-            choices: ['Engineer', 'Intern', 'Manager'],
-        },
-    ])
-
-    // If user selects the Engineer team member role
-    if (answers.role === 'Engineer') {
-        const EngineerAns = await inquirer
-        .prompt([
+// team manager question prompts begin
+managerQuestions = async () => {
+    return (
+        await inquirer.prompt([
             {
                 type: 'input',
-                message: 'What is your GitHub username?',
-                name: 'github',
+                message: "What is the manager's name?",
+                name: 'name',
             },
-        ])
-        const newEngineer = new Engineer(
-            answers.name,
-            answers.id,
-            answers.email,
-            EngineerAns.github,
-        );
-        team.push(newEngineer);
-        
-    // If user selects the Intern team member role    
-    } else if (answers.role === 'Intern') {
-        const InternAns = await inquirer
-        .prompt([
             {
                 type: 'input',
-                message: 'What school did you attend?',
-                name: 'school',
+                message: "What is the manager's employee ID?",
+                name: 'id',
             },
-        ])
-        const newIntern = new Intern(
-            answers.name,
-            answers.id,
-            answers.email,
-            InternAns.school,
-        );
-        team.push(newIntern);
-
-    // If user selects the Manager team member role
-    } else if (answers.role === 'Manager') {
-        const ManagerAns = await inquirer
-        .prompt([
             {
                 type: 'input',
-                message: 'What is your office number?',
+                message: "What is the manager's email address?",
+                name: 'email',
+            },
+            {
+                type: 'input',
+                message: "What is the manager's office number?",
                 name: 'officeNumber',
-            },
+            }
         ])
-        const newManager = new Manager(
-            answers.name,                    
-            answers.id,
-            answers.email,
-            ManagerAns.officeNumber,
-        );
-        team.push(newManager);
-    }
-}
-// This is the end of the questions for the user.
 
+        // add new team manager profile and push it to the team array
+        .then(managerInput => {
+            const { name, id, email, officeNumber } = managerInput;
+            const manager = new Manager(name, id, email, officeNumber);
 
-// Asks user for next step - add another team member or create team index.html page
-async function askQuestions(){
-    await questions()
-    const addTeamAns = await inquirer
+            team.push(manager);
+            console.log(manager);
+            addEmployee();
+        })
+    )
+};
 
-    .prompt([
+// initialize function
+managerQuestions();
+
+// add employees to manager's team
+addEmployee = async () => {
+    console.log(`Welcome to your team! Continue on to add more members or finish creating your team.`);
+
+    const answer = await inquirer.prompt([
         {
-            type: 'list',
-            message: 'What would you like to do next?',
-            name: 'addTeamMember',
-            choices: ['Add new team member', 'Create team'],
+            type: "list",
+            message: "Add a team member or finish creating your team.",
+            choices: ["Engineer", "Intern", "Finish Creating My Team"],
+            name: "role"
+        },
+    ]);
+    // switches the role of team member based on user input
+    switch (answer.role) {
+        case "Engineer":
+            engineerQuestions();
+            break;
+        case "Intern":
+            internQuestions();
+            break;
+        default:
+            finishCreateTeam();
+    }
+};
+
+// team engineer question prompts begin
+engineerQuestions = async () => {
+    const engineerInput = await inquirer.prompt([
+        {
+            type: "input",
+            message: "What is the engineer's name?",
+            name: "name"
+        },
+        {
+            type: "input",
+            message: "What is the engineer's employee ID?",
+            name: "id"
+        },
+        {
+            type: "input",
+            message: "What is the engineer's email address?",
+            name: "email"
+        },
+        {
+            type: "input",
+            message: "What is the engineer's GitHub username?",
+            name: "github"
+        }
+    ]);
+
+    const { name, id, email, github } = engineerInput;
+    const engineer = new Engineer(name, id, email, github);
+    team.push(engineer);
+    console.log(engineer);
+    addEmployee();
+}
+
+// team intern question prompts begin
+internQuestions = async () => {
+    const internInput = await inquirer.prompt([
+        {
+            type: "input",
+            message: "What is the intern's name?",
+            name: "name"
+        },
+        {
+            type: "input",
+            message: "What is the intern's employee ID?",
+            name: "id"
+        },
+        {
+            type: "input",
+            message: "What is the intern's email address?",
+            name: "email"
+        },
+        {
+            type: "input",
+            message: "Where did the intern attend university?",
+            name: "school"
         }
     ])
+    .then((internInput) => {
+        const { name, id, email, school } = internInput;
+        const intern = new Intern(name, id, email, school);
+        team.push(intern);
+        console.log(intern);
+        addEmployee();
+    });
+}
 
-    // If user selects 'Add new team member'
-    if (addTeamAns.addTeamMember === 'Add new team member'){
-        return askQuestions();
-
-    // If user selects 'Create team', then return the entire team object.
-    } else if (addTeamAns.addTeamMember === 'Create team'){
-        return function createTeam(team) {
-            for (let i =0; i < team.length; i++) {
-                return team[i],
-                console.log('Your team has been created!')
-            };
-        };
-    };
-};
-
-// // Function to start asking the user questions
-askQuestions();
-
-
-// Function to take the user input data (to JSON?) and generate an index.html file
-// Take in user input answers from inquirer prompts, create new data object
-// Use data object to plug in to html cards
-// SOOO take the generateTeam data and append to a generateTeamHTML.js...export the generateTeam or maybe createTeam function for use in the generateTeamHTML.js?
-
-function appendCreateTeam() {
+// when the user is finished creating their team, an HTML file is generated in the dist directory
+finishCreateTeam = () => {
     fs.writeFileSync(
-        path.join(path.resolve(__dirname, 'dist'), 'index.html'),
-        createTeam(team),
-        console.log('All done! Your team profile app has been generated.')
+        path.join(path.resolve(__dirname, "dist"), "team.html"),
+        generateHTML(team),
+        console.log("Finished! Your team profile has been created!")
     );
-};
+}
