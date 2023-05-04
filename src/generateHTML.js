@@ -80,8 +80,8 @@ generateHTML = (data) => {
 
     // join data
     const employeeCards = pageArray.join('')
-    const createTeam = createTeamPage(employeeCards);
-    return createTeam();
+    const team = createTeamPage(employeeCards);
+    const newTeam = createTeam(team);
 }
 
 // create team HTML page
