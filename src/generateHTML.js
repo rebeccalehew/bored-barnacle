@@ -1,5 +1,5 @@
 // create manager profile
-const createManager = function (manager) {
+const createManager = (manager) => {
     return `
     <div class='col-4 mt-4>
         <div class='card h-100 border-primary'>
@@ -19,7 +19,7 @@ const createManager = function (manager) {
 }
 
 // create Engineer profile
-const createEngineer = function (engineer) {
+const createEngineer = (engineer) => {
     return `
     <div class='col-4 mt-4>
         <div class='card h-100 border-primary'>
@@ -39,7 +39,7 @@ const createEngineer = function (engineer) {
 }
 
 // create Intern profile
-const createIntern = function (intern) {
+const createIntern = (intern) => {
     return `
     <div class='col-4 mt-4>
         <div class='card h-100 border-primary'>
@@ -85,12 +85,14 @@ generateHTML = (data) => {
 }
 
 // create team HTML page
-const createTeamPage = function (employeeCards) {
+const createTeamPage = (employeeCards) => {
     return `
     <!DOCTYPE html>
     <html lang="en" data-bs-theme="light">
     <head>
         <meta charset='UTF-8'>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>The Dream Team</title>
         <link rel='stylesheet' href='https://cdn.jsdeliver.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css'>
         <link rel='stylesheet' href='style.css' />
         <script src='https://kit.fontawesome.com/57383aac0c.js' crossorigin='anonymous'></script>
@@ -120,5 +122,5 @@ const createTeamPage = function (employeeCards) {
     `;
 }
 
-// export to index.html
+// export to team.html
 module.exports = generateHTML;
