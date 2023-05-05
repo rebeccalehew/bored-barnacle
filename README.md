@@ -11,7 +11,7 @@
 
 ## Description:
 
-The Team Profile Generator app is a Node.js command-line application that takes in information about employees on a software engineering team and generates an HTML webpage that displays summaries for each person.
+The Team Profile Generator app is a Node.js command-line application that takes in information via user input about employees on a software engineering team and generates an HTML webpage that displays summaries for each person.
 
 ## Installation:
 This app requires the use of the Inquirer package. To ensure that you install and use Inquirer version 8.2.4, use the following command in your project folder CLI: `npm i inquirer@8.2.4`. Now that you have inquirer available, let's prepare the node environment:
@@ -21,6 +21,10 @@ This app requires the use of the Inquirer package. To ensure that you install an
 4. Answer the prompts to have a simple, tidy team profile created off of your input!
 
 ## Usage:
+[Video Demo](https://drive.google.com/file/d/1vDFKqCmZjMHtZOBvuxXz4IImqebOxs3b/view)
+
+![Screenshot](./assets/images/dream-team.png)
+
 Below is the User Story highlighting the reasons why this app is needed. 
 
 User Story:
@@ -29,7 +33,10 @@ AS A manager
 I WANT to generate a webpage that displays my team's basic info
 SO THAT I have quick access to their emails and GitHub profiles
 ```
-This Node.js command-line application takes in formation about employees and creates an HTML webpage that displays summaries over each team member. This puts information about a team in one central location, making the lives of managers around the world much easier!
+
+![Screenshot](./assets/images/inquirer-prompt.png)
+
+This Node.js command-line application takes in formation about employees and creates an HTML webpage in the `dist` directory that displays summaries over each team member. This puts information about a team in one central location, making the lives of managers around the world much easier!
 
 ## Challenges:
 I struggled with passing the correct arguments into the many functions to get this app running as expected. Through trial and error, reading documentation, and reviewing working apps, I was able to debug my app and achieve functionality! 
