@@ -7,7 +7,7 @@ const path = require('path');
 const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
 const Manager = require('./lib/Manager');
-const generateHTML = require('./src/generateHTML');
+const createHTML = require('./src/createHTML');
 
 // creates an array where team member profiles are pushed
 const team = [];
@@ -143,11 +143,11 @@ internQuestions = async () => {
     });
 }
 
-// when the user is finished creating their team, an HTML file is generated in the dist directory
+// when the user is finished creating their team, an HTML file is created in the dist directory
 finishCreateTeam = () => {
     fs.writeFileSync(
         path.join(path.resolve(__dirname, "dist"), "team.html"),
-        generateHTML(team),
+        createHTML(team),
         console.log("Finished! Your team profile has been created!")
     );
 }
